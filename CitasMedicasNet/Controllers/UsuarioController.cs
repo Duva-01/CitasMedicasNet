@@ -94,6 +94,36 @@ namespace CitasMedicasNet.Controllers
             return Ok();
 
         }
+
+        [HttpGet("searchByName")]
+        public async Task<IActionResult> SearchByName(string nombre)
+        {
+            _logger.LogInformation("Buscando usuarios por nombre: {Nombre}", nombre);
+
+            IEnumerable<Usuario> usuarios = await _usuarioService.getUsuariosByNameAsync(nombre);
+            if (usuarios == null)
+            {
+                throw new NotFoundException($"No se encontraron usuarios con el nombre {nombre}.");
+            }
+
+            IEnumerable<UsuarioDTO> usuariosDTO = _mapper.Map<IEnumerable<UsuarioDTO>>(usuarios);
+            return Ok(usuariosDTO);
+        }
+
+        [HttpGet("searchBySurName")]
+        public async Task<IActionResult> SearchBySurName(string apellidos)
+        {
+            _logger.LogInformation("Buscando usuarios por apellidos: {Apellidos}", apellidos);
+
+            IEnumerable<Usuario> usuarios = await _usuarioService.getUsuariosBySurNameAsync(apellidos);
+            if (usuarios == null)
+            {
+                throw new NotFoundException($"No se encontraron usuarios con el apellido {apellidos}.");
+            }
+
+            IEnumerable<UsuarioDTO> usuariosDTO = _mapper.Map<IEnumerable<UsuarioDTO>>(usuarios);
+            return Ok(usuariosDTO);
+        }
     }
 
 }

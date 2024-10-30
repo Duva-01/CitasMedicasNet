@@ -13,7 +13,10 @@ namespace CitasMedicasNet.Repositories.Impl
             _context = context;
         }
 
-        public async Task<IEnumerable<MedicoPaciente>> GetAllAsync() => await _context.MedicoPacientes.ToListAsync();
+        public async Task<IEnumerable<MedicoPaciente>> GetAllAsync() => await _context.MedicoPacientes
+                .Include(mp => mp.medico)
+                .Include(mp => mp.paciente)
+                .ToListAsync();
 
         public async Task<MedicoPaciente> GetByIdAsync(int id) => await _context.MedicoPacientes.FindAsync(id);
 

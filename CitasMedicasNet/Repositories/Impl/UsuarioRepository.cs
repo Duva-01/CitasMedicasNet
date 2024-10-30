@@ -1,9 +1,12 @@
-﻿using CitasMedicasNet.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using CitasMedicasNet.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CitasMedicasNet.Repositories.Impl
 {
-    public class UsuarioRepository : IRepository<Usuario>
+    public class UsuarioRepository : IUsuarioRepository
     {
         private readonly AppDbContext _context;
 
@@ -41,6 +44,26 @@ namespace CitasMedicasNet.Repositories.Impl
             return true;
         }
 
-    }
+        public async Task<IEnumerable<Usuario>> GetByNameAsync(string nombre)
+        {
+            return await _context.Usuarios
+                .Where(u => u.nombre.Contains(nombre))
+                .ToListAsync();
 
+            /*
+            
+                return await _context.Usuarios
+                    .FromSqlInterpolated($"SELECT * FROM Usuario WHERE nombre = {nombre}")
+                    .ToListAsync();
+        
+             * */
+        }
+
+        public async Task<IEnumerable<Usuario>> GetBySurNameAsync(string apellidos)
+        {
+            return await _context.Usuarios
+                .Where(u => u.apellidos.Contains(apellidos))
+                .ToListAsync();
+        }
+    }
 }

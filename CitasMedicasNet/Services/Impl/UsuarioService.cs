@@ -6,11 +6,14 @@ namespace CitasMedicasNet.Services.Impl
 {
     public class UsuarioService : IUsuarioService
     {
-        private readonly IRepository<Usuario> _usuarioRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly ILogger<UsuarioService> _logger;
 
-        public UsuarioService(IRepository<Usuario> usuarioRepository)
+
+        public UsuarioService(IUsuarioRepository usuarioRepository, ILogger<UsuarioService> logger)
         {
             _usuarioRepository = usuarioRepository;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<Usuario>> getUsuariosAsync()
@@ -73,6 +76,32 @@ namespace CitasMedicasNet.Services.Impl
             catch (Exception ex)
             {
                 throw new Exception("Fallo al intentar eliminar un usuario: " + ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<Usuario>> getUsuariosByNameAsync(string nombre)
+        {
+            try
+            {
+                return await _usuarioRepository.GetByNameAsync(nombre);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error al buscar usuarios por nombre: {Message}", ex.Message);
+                throw new Exception("Error al buscar usuarios por nombre. Consulta los logs para más detalles.");
+            }
+        }
+
+
+        public async Task<IEnumerable<Usuario>> getUsuariosBySurNameAsync(string apellidos)
+        {
+            try
+            {
+                return await _usuarioRepository.GetBySurNameAsync(apellidos);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al buscar usuarios por apellidos: " + ex.Message);
             }
         }
     }

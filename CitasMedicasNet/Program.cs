@@ -20,24 +20,24 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Registro de servicios
-builder.Services.AddScoped<IUsuarioService, UsuarioService>();
-builder.Services.AddScoped<IRepository<Usuario>, UsuarioRepository>();
+// Registro de servicios // Meter singleton
+builder.Services.AddSingleton<IUsuarioService, UsuarioService>();
+builder.Services.AddSingleton<IUsuarioRepository, UsuarioRepository>();
 
-builder.Services.AddScoped<IPacienteService, PacienteService>();
-builder.Services.AddScoped<IRepository<Paciente>, PacienteRepository>();
+builder.Services.AddSingleton<IPacienteService, PacienteService>();
+builder.Services.AddSingleton<IRepository<Paciente>, PacienteRepository>();
 
-builder.Services.AddScoped<IMedicoService, MedicoService>();
-builder.Services.AddScoped<IRepository<Medico>, MedicoRepository>();
+builder.Services.AddSingleton<IMedicoService, MedicoService>();
+builder.Services.AddSingleton<IRepository<Medico>, MedicoRepository>();
 
-builder.Services.AddScoped<IMedicoPacienteService, MedicoPacienteService>();
-builder.Services.AddScoped<IMedicoPacienteRepository, MedicoPacienteRepository>();
+builder.Services.AddSingleton<IMedicoPacienteService, MedicoPacienteService>();
+builder.Services.AddSingleton<IMedicoPacienteRepository, MedicoPacienteRepository>();
 
-builder.Services.AddScoped<ICitaService, CitaService>();
-builder.Services.AddScoped<IRepository<Cita>, CitaRepository>();
+builder.Services.AddSingleton<ICitaService, CitaService>();
+builder.Services.AddSingleton<IRepository<Cita>, CitaRepository>();
 
-builder.Services.AddScoped<IDiagnosticoService, DiagnosticoService>();
-builder.Services.AddScoped<IRepository<Diagnostico>, DiagnosticoRepository>();
+builder.Services.AddSingleton<IDiagnosticoService, DiagnosticoService>();
+builder.Services.AddSingleton<IRepository<Diagnostico>, DiagnosticoRepository>();
 
 
 // Registro de AutoMapper

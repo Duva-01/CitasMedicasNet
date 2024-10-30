@@ -23,7 +23,7 @@ namespace CitasMedicasNet.Services.Impl
             try
             {
                 _logger.LogInformation("Intentando obtener todos los MedicoPacientes");
-                return await _medicoPacienteRepository.GetAllWithRelationsAsync();
+                return await _medicoPacienteRepository.GetAllAsync();
 
             }
             catch (SqlException sqlEx)

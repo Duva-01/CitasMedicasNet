@@ -13,5 +13,9 @@ namespace CitasMedicasNet.Services
         public abstract Task<Usuario> updateUsuario(Usuario usuario);
 
         public abstract Task<bool> deleteUsuario(int id);
+
+        public abstract Task<IEnumerable<Usuario>> getUsuariosByNameAsync(string nombre);
+
+        public abstract Task<IEnumerable<Usuario>> getUsuariosBySurNameAsync(string apellidos);
     }
 }
